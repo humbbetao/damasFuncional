@@ -4,6 +4,7 @@ let rec criarMatrizInicial matriz lista =
     | hd::ht -> hd :: criarMatrizInicial ht lista
 ;;
 
+let bemvindo  = print_string "Bem vindo ao jogo de damas";;
 
 
 (*chamada de execucao*)
@@ -11,46 +12,18 @@ criarMatrizInicial  [] [["B";"R";"B";"R";"B";"R";"B";"R";"B";];["R";"B";"R";"B";
 ;;
 
 
-
-
-let rec hilo n =
-  let () = print_string "type a number: " in
+let rec escolhaDaPosicao =
+  let () = print_string "Digite a linha: " in
   let i = read_int ()  in
+  let ()  = print_string "Digite a coluna: " in
+  let j = read_int()  in
+
 
     print_int i;;
 
-hilo 89
+escolhaDaPosicao
 
 
-
-
-
-(*
-;;
-
-let menos posicao  = posicao - 1
-;;
-
-let rec inserir lista e =
-match lista with
-| [] ->[e] 
-| hd::ht->hd :: (inserir ht e)
-;;*)
-
-(*crio a matriz Inicial *)
-(*let damas =
-  print_string "Bem vindo a damas feito em ocaml" ;*)
-(*encadeamento de funcoes*)
-
-
-
-
-(* tento mover uma peca com a cor e a peca 
-   let rec moverPeca matriz cor linha coluna = 
-
-
-   ;;
-*)
 
 (*
 let
