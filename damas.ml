@@ -1,3 +1,24 @@
+let rec criarMatrizInicial matriz lista = 
+  match matriz with
+    | []-> lista
+    | hd::ht -> hd :: criarMatrizInicial ht lista
+;;
+
+
+
+(*chamada de execucao*)
+criarMatrizInicial  [] [["B";"R";"B";"R";"B";"R";"B";"R";"B";];["R";"B";"R";"B";"R";"B";"R";"B";"R";]; ["B";"R";"B";"R";"B";"R";"B";"R";"B";];["P";"B";"P";"B";"P";"B";"P";"B";"P";];["B";"P";"B";"P";"B";"P";"B";"P";"B";];["C";"B";"C";"B";"C";"B";"C";"B";"C";];["B";"C";"B";"C";"B";"C";"B";"C";"B";];["C";"B";"C";"B";"C";"B";"C";"B";"C";];]
+;;
+
+
+
+
+
+
+
+
+
+
 (*
 ;;
 
@@ -11,24 +32,12 @@ match lista with
 ;;*)
 
 (*crio a matriz Inicial *)
-let damas =
-  print_string "Bem vindo a damas feito em ocaml" ;
-  (*encadeamento de funcoes*)
-  let rec criarMatrizInicial matriz lista = 
-    match matriz with
-      | []-> lista
-      | hd::ht -> hd :: criarMatrizInicial ht lista;
-  in
-  let lerDoTeclado matriz  = 
-    print_string "Digite a posicao que voce quer comecar";
-    print_string "Voce e as pecas brancas";
-    let i = read_int ()
-              print_int i 
-;;
+(*let damas =
+  print_string "Bem vindo a damas feito em ocaml" ;*)
+(*encadeamento de funcoes*)
 
 
 
-damas;;
 
 (* tento mover uma peca com a cor e a peca 
    let rec moverPeca matriz cor linha coluna = 
@@ -52,7 +61,3 @@ end;*)
 
 
 (* daqui pra baixo eh so chamada de execucao*)
-(*chamada de execucao*)(*
-criarMatrizInicial  [] [["B";"R";"B";"R";"B";"R";"B";"R";"B";];["R";"B";"R";"B";"R";"B";"R";"B";"R";]; ["B";"R";"B";"R";"B";"R";"B";"R";"B";];["P";"B";"P";"B";"P";"B";"P";"B";"P";];["B";"P";"B";"P";"B";"P";"B";"P";"B";];["C";"B";"C";"B";"C";"B";"C";"B";"C";];["B";"C";"B";"C";"B";"C";"B";"C";"B";];["C";"B";"C";"B";"C";"B";"C";"B";"C";];]
-;;*)
-
