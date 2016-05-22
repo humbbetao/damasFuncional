@@ -13,7 +13,13 @@ criarMatrizInicial  [] [["B";"R";"B";"R";"B";"R";"B";"R";"B";];["R";"B";"R";"B";
 
 
 
+let rec hilo n =
+  let () = print_string "type a number: " in
+  let i = read_int ()  in
 
+    print_int i;;
+
+hilo 89
 
 
 
