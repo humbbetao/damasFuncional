@@ -4,6 +4,14 @@ let rec criarMatrizInicial matriz lista =
     | hd::ht -> hd :: criarMatrizInicial ht lista
 ;;
 
+
+let rec printar matriz = 
+  match matriz with
+    | []-> ()
+    | hd::ht -> print_string hd ;print_string " | "; printar ht
+;;
+
+
 let bemvindo  = print_string "Bem vindo ao jogo de damas";;
 
 
@@ -19,9 +27,18 @@ let rec escolhaDaPosicao =
   let j = read_int()  in
 
 
-    print_int i;;
+    print_int i; print_int j;;
 
-escolhaDaPosicao
+
+
+
+let damas = function
+  let matriz = criarMatrizInicial  [] [["B";"R";"B";"R";"B";"R";"B";"R";"B";];["R";"B";"R";"B";"R";"B";"R";"B";"R";]; ["B";"R";"B";"R";"B";"R";"B";"R";"B";];["P";"B";"P";"B";"P";"B";"P";"B";"P";];["B";"P";"B";"P";"B";"P";"B";"P";"B";];["C";"B";"C";"B";"C";"B";"C";"B";"C";];["B";"C";"B";"C";"B";"C";"B";"C";"B";];["C";"B";"C";"B";"C";"B";"C";"B";"C";];]
+  in 
+    printar matriz; escolhaDaPosicao;;
+
+
+damas;;
 
 
 
