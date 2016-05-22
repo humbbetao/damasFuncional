@@ -1,0 +1,1 @@
+print_string "Bem vindo ao jogos de damas";;
