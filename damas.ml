@@ -12,29 +12,22 @@ end;*)
 
 (* B = branco, P = preto, R = vermelha; C = Cinza *)
 
+(* link importante http://severus.no.sapo.pt/files/escola/disciplinas/LAP/teorica2.html*)
 
 
 
-		;;
-		
-		(*
-			and	escreverLista lista i = 
-			match lista with
-				| []-> []
-				| hd::ht-> if matriz[i][j] = "R" then (matriz[x][y] = "R"; matriz[i][j] = "P";) 
-							else print_string hd; print_string" | "; (printarLista ht (i+1)) ;;						
+let rec printarLista lista i = 
+	match lista with
+		| []->  print_string ""
+		| hd::ht-> if i =0 then (print_string" | "; print_int i;  print_string" - "; print_string hd;)
+					else print_string hd; print_string" | "; (printarLista ht (i+1)) ;;						
 
-*)
+
 let rec printaMatrizInicial matriz j = 
 	match matriz with
 		| [] -> []
-		| hd::ht -> print_string "\n"; print_int j; print_string " - "; (printarLista hd (j+1) ); print_string "\n"; (printaMatrizInicial ht  (j+1) )
-		and	printarLista lista i = 
-			match lista with
-				| []->  print_string ""
-				| hd::ht-> if i =0 then (print_string" | "; print_int i;  print_string" - "; print_string hd;)
-							else print_string hd; print_string" | "; (printarLista ht (i+1)) ;;						
-
+		| hd::ht -> print_string "\n"; print_int j; print_string " - "; (printarLista hd (j+1) ); print_string "\n"; (printaMatrizInicial ht  (j+1) );;
+	
 
 let rec printaMatriz matriz j = 
 	match matriz with
