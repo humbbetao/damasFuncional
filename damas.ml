@@ -1,12 +1,12 @@
 
 (*
 let
-val BRANCO = "B"
-val PRETO = "P"
-val VERMELHO = "R"
-val CINZA = "C"
-val QUEEN = "Q"
-val KING = "K"
+val MATRIZ BRANCO = "0"
+val MATRIZ PRETO = "1"
+val PECA VERMELHO = "B"
+val PECA CINZA = "P"
+val DAMA BRANCA = "D"
+val DAMA PRETA = "Q"
 in
 end;*)
 
@@ -15,26 +15,16 @@ end;*)
 (* link importante http://severus.no.sapo.pt/files/escola/disciplinas/LAP/teorica2.html*)
 
 
-
 let rec printarLista lista i = 
 	match lista with
 		| []->  print_string ""
 		| hd::ht-> if i =0 then (print_string" | "; print_int i;  print_string" - "; print_string hd;)
 					else print_string hd; print_string" | "; (printarLista ht (i+1)) ;;						
 
-
 let rec printaMatrizInicial matriz j = 
 	match matriz with
 		| [] -> []
 		| hd::ht ->  print_string "\n"; print_int j; print_string " - "; (printarLista hd (j+1) ); print_string "\n"; (printaMatrizInicial ht  (j+1) ) ;;
-(*comentario teste
-let rec printaMatrizInicial matriz j = 
-	match matriz with
-		| [] -> []
-		| hd::ht -> if j=1  then print_string "\nJogo de Damas Atual" ;	print_string "\n    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8";	print_string "\n    .   .   .   .   .   .   .   .";	print_string "\n"; print_int j; print_string " - "; (printarLista hd (j+1) );print_string "\n";	(printaMatrizInicial ht (j+1) )
-					else print_string "\n"; print_int j; print_string " - "; (printarLista hd (j+1) ); print_string "\n"; (printaMatrizInicial ht  (j+1) ) ;;
-	*)
-					
 
 let rec printaMatriz matriz j = 
 	match matriz with
@@ -53,128 +43,87 @@ let rec criarMatrizInicial matriz lista =
     | hd::ht -> hd :: criarMatrizInicial ht lista
 ;;
 
-let rec substituirPeca matriz peca x y = 
-	match matriz with
-		| []->[]
-		| hd::ht ->hd::ht;;
-(*		
-let rec verificarPeca cabeca peca lista ht =
-	if peca= "R" then lista::"P"::ht
-	else lista::"P"::ht ;;
-*)
-let rec verificarPeca peca lista ht =
-	if peca= "R" then lista::"P"::ht
-	else lista::"P"::ht ;;
-	
-	
-let rec acharPecaColuna linha lista peca i j =
-	match linha with	
-		| [] -> []
-		| hd::ht -> if j=0 then "P"::ht else acharPecaColuna ht (lista) peca i (j-1);;
-		
-let rec acharPeca matriz peca i j = 
+
+
+let rec acharNaMatrizALinha matriz peca x y = 
+	if peca = "P" then 
+	else if peca = "B" then
+	else if peca = "Q" then
+	else if peca = "D" then
+	else print_string "Erro"
 	match matriz with 
 		| [] -> []		
 		| hd::ht-> if i=0 then acharPecaColuna hd [] peca i j else acharPeca ht peca (i-1) j ;; 
-
-(*let rec moverPeca matriz i j x y peca = 
-	match matriz with
-		| [] -> []
-		| hd::ht -> if (i>0 j>0) then (acharPeca matriz peca i j)
-				else (substituirPeca matriz peca x y);;
-	*)	
-
-		
-		
-		
-(*		
-let rec moverY hd peca x y  =
-	match hd with
-		| [] -> []
-		| hd::ht -> if y >0 then (moverY ht peca x (y-1)) else peca::ht;
-		;;
-
-let rec moverPeca matriz peca x y = 
-	match matriz with
-		| [] -> []
-		| hd::ht -> if x > 0 then (moverPeca ht peca (x-1) y ) else (moverY hd peca x (y-1)) ;;
-
-		
-let rec andarEmColuna hd lista i j  =
-	match hd with
-		| [] -> []
-		| hd::ht -> if j >0 then (moverJ ht hd::lista i (j-1)) else lista::"P"::ht ;;
-				
-let rec andarEmLinha matriz lista i j  = 
-	match matriz with
-		| [] -> []
-		| hd::ht -> if i > 0 then andarEmLinha ht hd::lista (i-1) j else andarEmLinha hd [] i (j-1)  ;;
-*)
-
 
 		
 let bemVindo = print_string "Bem vindo ao jogo de damas";;
 
 let inicioDeTurno = print_string "\nJogo de Damas Atual"; print_string "\n    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8"; print_string "\n    .   .   .   .   .   .   .   .";;
 
-let turno jogador m  =  if  (jogador mod 2 ) = 0 then print_string "Turno do Jogador "   else print_string "Turno do Computador";;
 
-(*let m = printaMatrizInicial (criarMatrizInicial [] [["B";"R";"B";"R";"B";"R";"B";"R";];["R";"B";"R";"B";"R";"B";"R";"B";]; ["B";"R";"B";"R";"B";"R";"B";"R";];["P";"B";"P";"B";"P";"B";"P";"B";];["B";"P";"B";"P";"B";"P";"B";"P";];["C";"B";"C";"B";"C";"B";"C";"B";];["B";"C";"B";"C";"B";"C";"B";"C";];["C";"B";"C";"B";"C";"B";"C";"B";];]) 1;;
-*)
-(*
-let digitarALinhaEmQueEsta = print_string "Digite a linha em que voce esta: " ;
- 
-let digitarAColunaEmQueEsta  = print_string "Digite a coluna em que voca esta: " ;
- 
-let digitarALinhaParaQueVai = print_string "Digite a linha para a qual deseja se mover: " ;
-  
-let digitarAColunaParaQueVai = print_string "Digite a coluna para a qual deseja se mover: ";
-*)
+(*Codigo Aproveitavel*)
 
-let escolhaDaPosicao m1 m =
-	let () = print_string "Digite a linha em que voce esta: " in 
-	let i = read_int () in 
-	let () = print_string "Digite a coluna em que voca esta: " in
-	let j = read_int()  in 
-	let () = print_string "Digite a linha para a qual deseja se mover: " in
-	let x = read_int() in	
-	let () = print_string "Digite a coluna para a qual deseja se mover: " in
-	let y = read_int() in  acharPeca m i j;;	
+let rec substituirPecaEmColuna lista listaAuxiliar j peca  = 
+	match lista with
+		| [] -> []
+		| hd::ht -> if j=0 then listaAuxiliar::peca::ht 
+					else  substituirPeca ht lista::hd j-1 peca
+					
+let rec substituirPeca matriz matrizAuxiliar i j peca =
+	match matriz with
+		| []->[]
+		| hd::ht -> if i = 0 then matrizAuxiliar::(substituirPecaEmColuna hd [] j peca)::ht 
+					else substituirPeca ht matrizAuxiliar::hd i-1 j peca
+
+
+let moverPecaDeIJParaXY matriz i j x y = substituirPeca (substituirPecaDeIJ matriz [] i j "1") [] x y "P"
+;;
+let comerPecaDeIJParaXY  matriz i j x y  = substituirPeca (substituirPecaDeIJ  matriz [] i j "1") []  x y "P"
+;;
+let rec verificarNaColuna linha posicaoJ =
+	match linha with	
+		| []->[]
+		| hd::ht -> if posicaoJ = 0 then("se chegou no lugar e se chegou na cabeca se for vazio retorna 0 se nao 1")
+						if hd = "1" then 0
+						else 1
+					else verificarNaColuna ht posicaoJ-1 
+;;
+
+let rec verificarNaLinhaEColuna matriz posicaoI posicaoJ =
+	match matriz with
+		| []->[]
+		| hd::ht -> if posicaoI=0 then verificarNaColuna hd posicaoJ 
+					else  verificarNaLinhaEColuna ht matriz posicaoI-1 posicaoJ
+;;
+
+let rec verificarPeca matriz i j = 
+	if (verificarNaLinhaEColuna matriz i+1 j-1 && verificarNaLinhaEColuna matriz i+1 j+1) =0  then 0
+	else 1
+;;
 	
-	(*
-let jogada turno =
-	printaMatriz m 1
+let moverPeca matriz i j x y =
+	if (verificar matriz i j) = 0 then moverPecaDeIJParaXY matriz i j x y 
+	else comerPecaDeIJParaXY matriz i j x y
+;;	
 
-let turnar matriz  turno = if (0 mod 2) =0 then jogada turno+1 matriz else  jogadaComputador turno+1 matriz;;
-
-	
-	
-let damas = 	
-	let matrizOriginal = criarMatrizInicial [] [["B";"R";"B";"R";"B";"R";"B";"R";];["R";"B";"R";"B";"R";"B";"R";"B";]; ["B";"R";"B";"R";"B";"R";"B";"R";];["P";"B";"P";"B";"P";"B";"P";"B";];["B";"P";"B";"P";"B";"P";"B";"P";];["C";"B";"C";"B";"C";"B";"C";"B";];["B";"C";"B";"C";"B";"C";"B";"C";];["C";"B";"C";"B";"C";"B";"C";"B";];]
-		let turnar matrizOriginal 0 ;;
-	*)
-let damas = 	
-	let matrizOriginal = criarMatrizInicial [] [["B";"R";"B";"R";"B";"R";"B";"R";];["R";"B";"R";"B";"R";"B";"R";"B";]; ["B";"R";"B";"R";"B";"R";"B";"R";];["P";"B";"P";"B";"P";"B";"P";"B";];["B";"P";"B";"P";"B";"P";"B";"P";];["C";"B";"C";"B";"C";"B";"C";"B";];["B";"C";"B";"C";"B";"C";"B";"C";];["C";"B";"C";"B";"C";"B";"C";"B";];]
-	in escolhaDaPosicao (printaMatrizInicial matrizOriginal 1 ) matrizOriginal ;;
-	
-
-	(* x y "P";;*)
-	(*
-  let i = read_int ()  in
-  let digitarAColunaEmQueEsta  = print_string "Digite a coluna em que voca esta: " in
-  let j = read_int()  in  
-  let digitarALinhaParaQueVai = print_string "Digite a linha para a qual deseja se mover: " in
-  let x = read_int() in
-  let digitarAColunaParaQueVai = print_string "Digite a coluna para a qual deseja se mover: " in
-  let y = read_int() in print_string "\n"*)
-
-
-		
-		
-(*bemVindo;;*)
-(*printaMatrizInicial m 1;;	
-escolhaDaPosicao;;
-turno 0;;
-printaMatrizInicial m 1;;
-*)
+let escolhaDaPosicao numeroDeRequisicao = 
+	if numeroDeRequisicao mod 4 = 0 then print_string "Digite o numero da Linha em que esta: " in let i = read_int ()
+	else if numeroDeRequisicao mod 4 = 1 then print_string "Digite o numero da Coluna em que esta: " in let j = read_int ()
+	else if  numeroDeRequisicao mod 4 = 2 then print_string "Digite o numero da Linha para que vai: " in let x = read_int ()
+	else numeroDeRequisicao mod 4 = 3 then print_string "Digite o numero da Linha para que vai: " in let y = read_int ()
+;;	
+let turnoDoJogador matriz = 
+	let numeroDeRequisicao = 0 in
+		moverPeca matriz (escolhaDaPosicao  numeroDeRequisicao) (escolhaDaPosicao numeroDeRequisicao+1) (escolhaDaPosicao numeroDeRequisicao+2) (escolhaDaPosicao numeroDeRequisicao+3)(*o primeiro eh na linha e depois coluna da linha que ele esta*)
+;;	
+let rec turno matriz numeroDeTurno = 
+	if numeroDeTurno mod 2 = 0 
+		turno (turnoDoJogador matriz) numeroDeTurno+1
+	else turno (turnoDoComputador matriz) numeroDeTurno+1(*Como turno tem que ser recursivo ou chamonturno do jogador e do pc tendo o retonro de matriz*)
+;;
+let damas = 
+	let matrizOriginal = criarMatrizInicial [] [["0";"B";"0";"B";"0";"B";"0";"B";];["B";"0";"B";"0";"B";"0";"B";"0";]; ["0";"B";"0";"B";"0";"B";"0";"B";];["1";"0";"1";"0";"1";"0";"1";"0";];["0";"1";"0";"1";"0";"1";"0";"1";];["P";"0";"P";"0";"P";"0";"P";"0";];["0";"P";"0";"P";"0";"P";"0";"P";];["P";"0";"P";"0";"P";"0";"P";"0";];]
+	 in let turno matrizOriginal 0[
+;;
+	  
 damas;;
