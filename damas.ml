@@ -96,6 +96,7 @@ let moverPeca matriz i j x y =
 
 let moverPeca matriz i j x y = moverPecaDeIJParaXY matriz i j x y 
 ;;
+
 let escolhaDaPosicao numeroDeRequisicao = 
 		if (numeroDeRequisicao mod 4) = 0 then let() = print_string "Digite o numero da Linha em que esta: " in read_int()
 		else if (numeroDeRequisicao mod 4) = 1 then let() = print_string "Digite o numero da Coluna em que esta: " in read_int()
@@ -105,7 +106,7 @@ let escolhaDaPosicao numeroDeRequisicao =
 	
 let turnoDoJogador matriz = 
 	let numeroDeRequisicao = 0 in
-		moverPeca matriz (escolhaDaPosicao  numeroDeRequisicao) (escolhaDaPosicao numeroDeRequisicao+1) (escolhaDaPosicao numeroDeRequisicao+2) (escolhaDaPosicao numeroDeRequisicao+3)(*o primeiro eh na linha e depois coluna da linha que ele esta*)
+		moverPeca matriz (escolhaDaPosicao numeroDeRequisicao) (escolhaDaPosicao (numeroDeRequisicao+1)) (escolhaDaPosicao (numeroDeRequisicao+2)) (escolhaDaPosicao (numeroDeRequisicao+3))(*o primeiro eh na linha e depois coluna da linha que ele esta*)
 ;;
 (*
 let moverPecaComputadorDeIJParaXY matriz numeroDeRequisicao=
@@ -144,11 +145,12 @@ let verificarPosicoesMaisAFrente matriz i j lista =
 		| hd::ht -> if (verificarPosicaoNaLinha hd j (inserirNaUltimaPosicao [] i ) = 1) then inserirNaUltimaPosicao  (inserirNaUltimaPosicao [] i ) j
 					else (verificarPosicoesMaisAFrente ht (i+1) j lista = 1)
 ;;*)
-					
+(*		
 let moverPecaDoComputadordeIJParaXY matriz i j x y =  substituirPeca (substituirPeca matriz [] i j ["1"]) [] x y ["B"]
 ;;
 	
-let moverPecaComputador matriz =
+let moverPecaComputador matriz = 
+	let matrizNova = 
 	let parOrdenado = verificarPosicaoMaisAFrenteEMeRetornarAParOrdenadoDoLugar matriz 1 1 in
 			match parOrdenado with 
 				| [] ->[]
@@ -159,22 +161,30 @@ let turnoDoComputador matriz =
 	let numeroDeRequisicao = 0 in
 		moverPecaComputador matriz ; 
 ;;
-
-let rec turno matriz numeroDeTurno = 
-	if numeroDeTurno mod 2 = 0 then
-		turno (turnoDoJogador matriz) numeroDeTurno+1
-	else turno (turnoDoComputador matriz) numeroDeTurno+1(*Como turno tem que ser recursivo ou chamonturno do jogador e do pc tendo o retonro de matriz*)
+*)
+let rec turno matriz  numeroDeTurno = (*if numeroDeTurno mod 2 = 0 then*)
+		turno (turnoDoJogador matriz) (numeroDeTurno+1)
+	(*else turno (turnoDoComputador matriz) numeroDeTurno+1*)(*Como turno tem que ser recursivo ou chamonturno do jogador e do pc tendo o retonro de matriz*)
 ;;
 
 let rec criarMatrizInicial matriz lista = 
   match matriz with
-    | []-> lista
-    | hd::ht -> hd :: criarMatrizInicial ht lista
+    | []-> [lista]
+    | hd::ht -> hd :: (criarMatrizInicial ht lista)
 ;;
 
 let damas = 
-	let matrizOriginal = criarMatrizInicial [] [["0";"B";"0";"B";"0";"B";"0";"B";];["B";"0";"B";"0";"B";"0";"B";"0";]; ["0";"B";"0";"B";"0";"B";"0";"B";];["1";"0";"1";"0";"1";"0";"1";"0";];["0";"1";"0";"1";"0";"1";"0";"1";];["P";"0";"P";"0";"P";"0";"P";"0";];["0";"P";"0";"P";"0";"P";"0";"P";];["P";"0";"P";"0";"P";"0";"P";"0";];]
-	in turno matrizOriginal 0
+	let matrizOriginal = (criarMatrizInicial [] [["0";"B";"0";"B";"0";"B";"0";"B";];
+													["B";"0";"B";"0";"B";"0";"B";"0";];
+													["0";"B";"0";"B";"0";"B";"0";"B";];
+													["1";"0";"1";"0";"1";"0";"1";"0";];
+													["0";"1";"0";"1";"0";"1";"0";"1";];
+													["P";"0";"P";"0";"P";"0";"P";"0";];
+													["0";"P";"0";"P";"0";"P";"0";"P";];
+													["P";"0";"P";"0";"P";"0";"P";"0";];
+													])
+													
+		in turno matrizOriginal  0
 ;;
 
 let bemVindo = print_string "Bem vindo ao jogo de damas";;
