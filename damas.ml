@@ -191,4 +191,4 @@ let bemVindo = print_string "Bem vindo ao jogo de damas";;
 
 let inicioDeTurno = print_string "\nJogo de Damas Atual"; print_string "\n    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8"; print_string "\n    .   .   .   .   .   .   .   .";;
 	  
-damas;;
+damas;;   
