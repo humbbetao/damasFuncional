@@ -6,41 +6,53 @@ PECA CINZA = "P"
 DAMA BRANCA = "D"
 DAMA PRETA = "Q"
 *)
+
 				
 let rec inserirNaUltimaPosicao lista elemento = 
 	match lista with	
-		| []-> elemento
+		| []-> [elemento]
 		| hd::ht -> inserirNaUltimaPosicao ht elemento
 ;;
 
-let rec substituirPecaEmColuna lista listaAuxiliar j peca  = 
+let rec appendLista lista elemento =
 	match lista with
-		|[] ->[]
-		| hd::ht -> if j=0 then inserirNaUltimaPosicao listaAuxiliar (inserirNaUltimaPosicao (peca::[]) ht)
-					else substituirPecaEmColuna ht (inserirNaUltimaPosicao listaAuxiliar hd) (j-1) peca
+		| []-> [elemento]
+		| hd::ht -> hd::appendLista ht elemento;;
+
+let rec appendLista2 lista elemento =
+	match lista with
+		| []-> elemento
+		| hd::ht -> hd::appendLista2 ht elemento;;
+
+		
+let rec substituirPecaEmColuna lista j peca  = 
+	match lista with
+		| [] ->[]
+		| hd::ht -> if j=0 then peca@ht
+					else hd::(substituirPecaEmColuna ht (j-1) peca)
 ;;					
-let rec substituirPeca matriz matrizAuxiliar i j peca =
+let rec substituirPeca matriz i j peca =
 	match matriz with
-		[] ->[]
-		| hd::ht -> if i = 0 then  inserirNaUltimaPosicao(inserirNaUltimaPosicao matrizAuxiliar (substituirPecaEmColuna hd [] j peca)) ht
-					else substituirPeca ht (inserirNaUltimaPosicao matrizAuxiliar hd) (i-1) j peca
+		| [] ->[]
+		| hd::ht -> if i = 0 then   (substituirPecaEmColuna hd j peca)::ht
+					else hd::(substituirPeca ht (i-1) j peca)
 ;;
 
-let moverPecaDeIJParaXY matriz i j x y = substituirPeca (substituirPeca matriz [] i j "1" ) [] x y "B" 
+let moverPecaDeIJParaXY matriz i j x y = substituirPeca (substituirPeca matriz i j ["1"] ) x y ["B"] 
 ;;
 
-let comerPecaDeIJParaXY  matriz i j x y k l = substituirPeca (substituirPeca (substituirPeca matriz [] k l "1") [] i j "1") [] x y "B"
+let comerPecaDeIJParaXY  matriz i j x y k l = substituirPeca (substituirPeca (substituirPeca matriz k l ["1"]) i j ["1"]) x y ["B"]
 ;;
 
 
-let moverPeca matriz i j x y = moverPecaDeIJParaXY matriz y x j i  
+let moverPeca matriz i j x y = moverPecaDeIJParaXY matriz x y i j  
 ;;
 
 let escolhaDaPosicao numeroDeRequisicao = 
-		if numeroDeRequisicao = 0 then let() = print_string "Digite o numero da Linha em que esta: " in read_int()
-		else if numeroDeRequisicao = 1 then let() = print_string "Digite o numero da Coluna em que esta: " in read_int()
-		else if numeroDeRequisicao  = 2 then let() = print_string "Digite o numero da Linha para que vai: " in read_int()
-		else let() = print_string "Digite o numero da Coluna para que vai: " in read_int() 
+		if numeroDeRequisicao = 0 then let() = print_string "\nInsira as posicoes :\nDigite o numero da Linha em que esta: " in read_int()
+		else if numeroDeRequisicao = 1 then let() = print_string "\nDigite o numero da Coluna em que esta: " in read_int()
+		else if numeroDeRequisicao  = 2 then let() = print_string "\nDigite o numero da Linha para que vai: " in read_int()
+		else let() = print_string "\nDigite o numero da Coluna para que vai: " in read_int() 
 ;;
 
 let pecaCapturada matriz i j x y =
@@ -64,7 +76,6 @@ let turnoDoJogador matriz = moverPeca matriz (escolhaDaPosicao 3) (escolhaDaPosi
 	
 let turnar matriz numeroDeTurno =  turnoDoJogador matriz
 ;;	
-
 let rec printarMatriz matriz turno j matrizNova =
 	match matriz with
 		| [] -> print_string ""
@@ -74,22 +85,22 @@ let rec printarMatriz matriz turno j matrizNova =
 									print_string "\n";
 									print_int j;
 									print_string " - ";	
-									(printarLista hd 1 j matrizNova turno); 
+									(printarLista hd 1 j (appendLista matrizNova hd) turno); 
 									print_string "\n";
-									(printarMatriz ht turno (j+1) (inserirNaUltimaPosicao matrizNova hd))
+									(printarMatriz ht turno (j+1) (appendLista matrizNova hd) )
 								)
 					else		    ( print_string "\n";
 									print_int j;
 									print_string " - ";	
-									(printarLista hd 1 j matrizNova turno); 
+									(printarLista hd 1 j (appendLista matrizNova hd) turno); 
 									print_string "\n";
-									(printarMatriz ht turno (j+1) (inserirNaUltimaPosicao matrizNova hd))
+									(printarMatriz ht turno (j+1) (appendLista matrizNova hd) 	 )
 								)
 		
 		and	printarLista lista i j matriz turno  = 
 			match lista with
-				| []-> print_string ""
-				| hd::ht -> if ( (i=8) && (j=8) ) then  print_string hd	
+				| []-> print_string "";
+				| hd::ht -> if ( (i=8) && (j=8) ) then  (print_string hd; (printarMatriz (turnar matriz turno) (turno+1) 1 []))
 							else print_string hd; print_string" | "; (printarLista ht (i+1) j matriz turno) 
 				
 ;;
