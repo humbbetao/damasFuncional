@@ -39,8 +39,30 @@ let rec substituirPeca matriz i j peca =
 		| hd::ht -> if i = 1 then   (substituirPecaEmColuna hd j peca)::ht
 					else hd::(substituirPeca ht (i-1) j peca)
 ;;
+let rec verificarPecaemY lista y =
+	match lista with
+		|[]->[]
+		|hd::ht -> if (y=0 && hd="P") then "P"
+					else verificarPecaemY ht (y-1)
+;;					
+					
+let rec verificarPecaEMXY matriz x y  =
+	match matriz with
+	|[]->[]
+	|hd::ht->if x=0 then
+				verificarPecaemY hd y
+				else verificarPecaEMXY ht (x-1) y
+;;
+let decidirPosicao j y=
+	if (j=2 && y=1) then 2
+	else if (j=7 && y=8) then 7
+	else (y+1)
+;;
 
-let moverPecaDeIJParaXY matriz i j x y =  substituirPeca (substituirPeca matriz i j ["1"] ) x y ["B"] 
+let moverPecaDeIJParaXY matriz i j x y = if ("P" = (verificarPecaEMXY matriz x y)) then
+											substituirPeca (substituirPeca (substituirPeca matriz i j ["1"] ) x y ["1"]) (x+1) (decidirPosicao j y) ["B"]
+										else
+											substituirPeca (substituirPeca matriz i j ["1"] ) x y ["B"]
 ;;
 
 (*
@@ -66,8 +88,7 @@ let pecaCapturada matriz i j x y =
 
 
 
-let moverPeca matriz i j x y =  moverPecaDeIJParaXY matriz y x j i 
-;;
+
 
 let moverPecaPreta matriz i j x y =  substituirPeca (substituirPeca matriz i j ["1"] ) x y ["P"]
 ;;
@@ -78,8 +99,17 @@ let moverPeca matriz i j x y =
 	else pecaCapturada matriz y x j i
 ;;*)
 
+let moverPeca matriz i j x y = moverPecaDeIJParaXY matriz y x j i 
+;;
+(*
+let moverPeca matriz i j x y = if (i <=0 || i>8 || j<=0 || j>8 ||x <=0 || x>8 ||y <=0 || y>8) then
+									moverPeca matriz (escolhaDaPosicao 3) (escolhaDaPosicao 2) (escolhaDaPosicao 1) (escolhaDaPosicao 0)(*o primeiro eh na linha e depois coluna da linha que ele esta*)
+								else moverPecaDeIJParaXY matriz y x j i 
+;;
+*)
 let turnoDoJogador matriz = moverPeca matriz (escolhaDaPosicao 3) (escolhaDaPosicao 2) (escolhaDaPosicao 1) (escolhaDaPosicao 0)(*o primeiro eh na linha e depois coluna da linha que ele esta*)
 ;;
+
 
 let rec verificarPecaNaLinhaDoComputadorBranca lista i j = 
 	match lista with
@@ -119,7 +149,7 @@ let moverPecaDoComputador matriz posicaoIJ posicaoXY =
 ;;
 let turnoDoComputador matriz = 
 	let posicaoIJ, posicaoXY  = verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz [] 1, verificarPecaMaisAFrenteERetornarOPosicaoXY matriz [] 1
-	in then moverPecaDoComputador matriz posicaoIJ posicaoXY
+	in  moverPecaDoComputador matriz posicaoIJ posicaoXY
 ;;
 	
 let turnar matriz numeroDeTurno = if (numeroDeTurno mod 2) =0  then turnoDoJogador matriz
