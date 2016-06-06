@@ -42,7 +42,7 @@ let rec substituirPeca matriz i j peca =
 let rec verificarPecaemY lista y =
 	match lista with
 		|[]->[]
-		|hd::ht -> if (y=0 && hd="P") then "P"
+		|hd::ht -> if (y=0 && hd="P") then ["P"]
 					else verificarPecaemY ht (y-1)
 ;;					
 					
@@ -59,7 +59,7 @@ let decidirPosicao j y=
 	else (y+1)
 ;;
 
-let moverPecaDeIJParaXY matriz i j x y = if ("P" = (verificarPecaEMXY matriz x y)) then
+let moverPecaDeIJParaXY matriz i j x y = if (["P"] = (verificarPecaEMXY matriz x y)) then
 											substituirPeca (substituirPeca (substituirPeca matriz i j ["1"] ) x y ["1"]) (x+1) (decidirPosicao j y) ["B"]
 										else
 											substituirPeca (substituirPeca matriz i j ["1"] ) x y ["B"]
