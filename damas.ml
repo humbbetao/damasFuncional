@@ -104,10 +104,7 @@ let rec verificarPecaMaisAFrenteERetornarOPosicaoXY matriz listaAuxiliar i =
 						verificarPecaMaisAFrenteERetornarOPosicaoIJ ht hd (i+1)
 					else verificarPecaNaLinhaDoComputadorPreta listaAuxiliar i 1 
 ;;
-let moverPecaDoComputador matriz posicaoIJ posicaoXY = matriz
-		
-
-	
+let moverPecaDoComputador matriz posicaoIJ posicaoXY = matriz	
 ;;
 
 let turnoDoComputador matriz = 
