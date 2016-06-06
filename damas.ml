@@ -104,13 +104,16 @@ let rec verificarPecaMaisAFrenteERetornarOPosicaoXY matriz listaAuxiliar i =
 						verificarPecaMaisAFrenteERetornarOPosicaoIJ ht hd (i+1)
 					else verificarPecaNaLinhaDoComputadorPreta listaAuxiliar i 1 
 ;;
-let moverPecaDoComputador matriz = 
+let moverPecaDoComputador matriz posicaoIJ posicaoXY = matriz
+		
+
+	
 ;;
 
-let turnoDoComputador matriz  = 
+let turnoDoComputador matriz = 
 	let posicaoIJ  = verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz
 	in let posicaoXY = verificarPecaMaisAFrenteERetornarOPosicaoXY matriz
-	in moverPecaDoComputador matriz 
+	in moverPecaDoComputador matriz posicaoIJ posicaoXY
 ;;
 	
 let turnar matriz numeroDeTurno = if (numeroDeTurno mod 2) =0  then turnoDoJogador matriz
