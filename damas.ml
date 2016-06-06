@@ -17,12 +17,14 @@ let rec inserirNaUltimaPosicao lista elemento =
 let rec appendLista lista elemento =
 	match lista with
 		| []-> [elemento]
-		| hd::ht -> hd::appendLista ht elemento;;
+		| hd::ht -> hd::appendLista ht elemento
+;;
 
 let rec appendLista2 lista elemento =
 	match lista with
 		| []-> elemento
-		| hd::ht -> hd::appendLista2 ht elemento;;
+		| hd::ht -> hd::appendLista2 ht elemento
+	;;
 
 		
 let rec substituirPecaEmColuna lista j peca  = 
@@ -39,7 +41,7 @@ let rec substituirPeca matriz i j peca =
 ;;
 
 let moverPecaDeIJParaXY matriz i j x y =  substituirPeca (substituirPeca matriz i j ["1"] ) x y ["B"] 
-	
+;;
 
 (*
 let moverPecaDeIJParaXY matriz i j x y = 
@@ -65,6 +67,9 @@ let pecaCapturada matriz i j x y =
 
 
 let moverPeca matriz i j x y =  moverPecaDeIJParaXY matriz y x j i 
+;;
+
+let moverPecaPreta matriz i j x y =  substituirPeca (substituirPeca matriz i j ["1"] ) x y ["P"]
 ;;
 (*
 let moverPeca matriz i j x y =   
@@ -100,17 +105,21 @@ let rec verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz listaAuxiliar i =
 let rec verificarPecaMaisAFrenteERetornarOPosicaoXY matriz listaAuxiliar i = 
 	match matriz with
 		| []-> []
-		| hd::ht-> if (verificarPecaNaLinhaDoComputadorPreta hd i 1)!=[] then
-						verificarPecaMaisAFrenteERetornarOPosicaoIJ ht hd (i+1)
-					else verificarPecaNaLinhaDoComputadorPreta listaAuxiliar i 1 
+		| hd::ht-> if (verificarPecaNaLinhaDoComputadorPreta hd i 1)=[] then
+						verificarPecaMaisAFrenteERetornarOPosicaoXY ht hd (i+1)
+					else verificarPecaNaLinhaDoComputadorPreta hd i 1 
 ;;
-let moverPecaDoComputador matriz posicaoIJ posicaoXY = matriz	
+let moverPecaDoComputador matriz posicaoIJ posicaoXY =
+	match posicaoIJ with
+		|[] ->[]
+		|i::j::tailIJ ->match posicaoXY with
+						|[]->[]
+						|x::y::tailXY-> if j >= y then moverPecaPreta matriz x y (x-1)(y+1)
+										else moverPecaPreta matriz x y (x-1) (y+1)
 ;;
-
 let turnoDoComputador matriz = 
-	let posicaoIJ  = verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz
-	in let posicaoXY = verificarPecaMaisAFrenteERetornarOPosicaoXY matriz
-	in moverPecaDoComputador matriz posicaoIJ posicaoXY
+	let posicaoIJ, posicaoXY  = verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz [] 1, verificarPecaMaisAFrenteERetornarOPosicaoXY matriz [] 1
+	in then moverPecaDoComputador matriz posicaoIJ posicaoXY
 ;;
 	
 let turnar matriz numeroDeTurno = if (numeroDeTurno mod 2) =0  then turnoDoJogador matriz
