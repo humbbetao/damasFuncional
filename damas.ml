@@ -126,6 +126,7 @@ let rec verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz listaAuxiliar i =
 						verificarPecaMaisAFrenteERetornarOPosicaoIJ ht hd (i+1)
 					else verificarPecaNaLinhaDoComputadorBranca listaAuxiliar i 1 
 ;;
+
 let rec verificarPecaMaisAFrenteERetornarOPosicaoXY matriz listaAuxiliar i = 
 	match matriz with
 		| []-> []
@@ -133,6 +134,7 @@ let rec verificarPecaMaisAFrenteERetornarOPosicaoXY matriz listaAuxiliar i =
 						verificarPecaMaisAFrenteERetornarOPosicaoXY ht hd (i+1)
 					else verificarPecaNaLinhaDoComputadorPreta hd i 1 
 ;;
+
 let moverPecaDoComputador matriz posicaoIJ posicaoXY =
 	match posicaoIJ with
 		|[] ->[]
@@ -141,14 +143,46 @@ let moverPecaDoComputador matriz posicaoIJ posicaoXY =
 						|x::y::tailXY-> if j >= y then moverPecaPreta matriz x y (x-1)(y+1)
 										else moverPecaPreta matriz x y (x-1) (y+1)
 ;;
+
+let rec verificarSeTemPecaNaLinha lista peca i j =
+	match lista with
+		|[]->[]
+		|hd::ht -> if hd="B" then i::j::[]
+					else verificarSeTemPecaNaLinha ht peca i (j+1)
+;;
+
+let rec verificarSeTemPecaNaLinhaAdjacente lista peca i j parOrdenado =
+	match lista with
+		|[]->[],[]
+		|hd::ht -> match parOrdenado with
+					|[]->[],[]
+					|head::tail -> 
+								if (((List.hd tail) = (j-1)) && (hd ="P")) then
+									((i::j::[]), (head::tail))
+								else if (((List.hd tail) = (j+1)) && (hd ="P"))then
+									((i::j::[]), (head::tail))
+								else verificarSeTemPecaNaLinhaAdjacente	ht peca i (j+1) (head::tail)
+;;
+					
+let rec verificarSeDaPraComer matriz lista i=
+	match matriz with
+		|[]-> [],[]
+		|hd::ht ->if i<7&&(verificarSeTemPecaNaLinhaAdjacente (List.hd ht) "P" i 1 (verificarSeTemPecaNaLinha hd "B" i 1 ))= ([],[]) then
+							verificarSeDaPraComer ht lista (i+1)
+						else (verificarSeTemPecaNaLinhaAdjacente (List.hd ht) "P" i 1 (verificarSeTemPecaNaLinha hd "B" i 1 ))
+;;
+
 let turnoDoComputador matriz = 
-	let posicaoIJ, posicaoXY  = verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz [] 1, verificarPecaMaisAFrenteERetornarOPosicaoXY matriz [] 1
+	let posicaoIJ, posicaoXY  = if (verificarSeDaPraComer matriz [] 1)=([],[]) then
+			verificarPecaMaisAFrenteERetornarOPosicaoIJ matriz [] 1, verificarPecaMaisAFrenteERetornarOPosicaoXY matriz [] 1
+		else verificarSeDaPraComer matriz [] 1
 	in  moverPecaDoComputador matriz posicaoIJ posicaoXY
 ;;
 	
 let turnar matriz numeroDeTurno = if (numeroDeTurno mod 2) =0  then turnoDoJogador matriz
 									else turnoDoComputador matriz
 ;;	
+
 let rec printarMatriz matriz turno j matrizNova =
 	match matriz with
 		| [] -> print_string ""
