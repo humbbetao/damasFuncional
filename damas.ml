@@ -1,13 +1,4 @@
-(*
-MATRIZ BRANCO = "0"
-MATRIZ PRETO = "1"
-PECA VERMELHO = "B"
-PECA CINZA = "P"
-DAMA BRANCA = "D"
-DAMA PRETA = "Q"
-*)
-
-				
+			
 let rec inserirNaUltimaPosicao lista elemento = 
 	match lista with	
 		| []-> [elemento]
@@ -53,10 +44,13 @@ let rec verificarPecaEMXY matriz x y  =
 				verificarPecaemY hd y
 				else verificarPecaEMXY ht (x-1) y
 ;;
-let decidirPosicao j y=
-	if (j=2 && y=1) then 2
-	else if (j=7 && y=8) then 7
-	else (y+1)
+let decidirPosicao j y =
+	if (j = 2 && y = 1	) then j
+	else if (j=7 && y=8) then j
+	else if (j < y) then (y+1)
+	else if (j > y) then (y-1)
+	else (y-1)
+	
 ;;
 
 let moverPecaDeIJParaXY matriz i j x y = if (["P"] = (verificarPecaEMXY matriz x y)) then
